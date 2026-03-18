@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gramin CSC - In dandkarwan</title>
+    <meta name="description" content="Gramin CSC par payein sabhi sarkari yojanaon ki vistar se jankari. PM Kisan, Ayushman Bharat, Aadhar aur anya suvidhaon ke liye kaise apply karein.">
+    
+    <style>
+        :root {
+            --saffron: #FF9933; --white: #FFFFFF; --green: #128807; --blue: #000080;
+            --insta: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(to bottom, var(--saffron) 0%, var(--saffron) 33%, var(--white) 33%, var(--white) 66%, var(--green) 66%, var(--green) 100%);
+            background-attachment: fixed; margin: 0; padding: 0;
+        }
+
+        header {
+            width: 100%; padding: 40px 0; text-align: center;
+            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);
+        }
+
+        header h1 {
+            margin: 0; font-size: clamp(28px, 12vw, 55px); font-weight: 900;
+            text-transform: uppercase; letter-spacing: 2px; animation: glowText 3s infinite alternate;
+        }
+
+        @keyframes glowText {
+            0% { color: var(--blue); text-shadow: 0 0 10px #fff; }
+            100% { color: var(--saffron); text-shadow: 0 0 20px #fff; }
+        }
+
+        .container {
+            width: 92%; max-width: 900px; margin: 20px auto;
+            background: rgba(255, 255, 255, 0.98); padding: 25px;
+            border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .news-ticker {
+            background: var(--blue); color: white; padding: 10px;
+            border-radius: 10px; margin-bottom: 20px; font-weight: bold; overflow: hidden;
+        }
+
+        .service-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+
+        .service-item {
+            background: #f8f9fa; border-radius: 10px; border-left: 8px solid var(--blue);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); transition: 0.3s; cursor: pointer;
+        }
+
+        .service-item:hover { transform: translateY(-3px); background: var(--blue); border-left-color: var(--saffron); }
+        .service-item span { display: block; padding: 18px; color: var(--blue); font-size: 16px; font-weight: bold; }
+        .service-item:hover span { color: white; }
+
+        #contentOverlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 3000; overflow-y: auto; padding: 0;
+        }
+
+        .overlay-nav {
+            background: var(--blue); color: white; padding: 15px 20px;
+            position: sticky; top: 0; display: flex; justify-content: space-between; align-items: center;
+        }
+
+        .overlay-content { padding: 30px 20px; max-width: 800px; margin: 0 auto; line-height: 1.8; font-size: 17px; }
+        .overlay-content h2 { color: var(--blue); border-bottom: 3px solid var(--saffron); padding-bottom: 10px; }
+        
+        .apply-now-btn {
+            display: block; width: 100%; max-width: 300px; margin: 30px auto;
+            background: var(--green); color: white; text-align: center;
+            padding: 15px; border-radius: 50px; font-weight: bold; text-decoration: none; font-size: 18px;
+        }
+
+        .insta-btn {
+            display: inline-block; background: var(--insta); color: white;
+            padding: 12px 25px; border-radius: 30px; text-decoration: none;
+            font-weight: bold; margin-top: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        footer { background: #1a252f; color: white; text-align: center; padding: 40px 20px; margin-top: 40px; }
+        .adsense-disclaimer { font-size: 15px; color: #bdc3c7; max-width: 700px; margin: 20px auto; }
+        .footer-btns button { background: none; border: 1px solid #555; color: #ccc; padding: 8px 12px; margin: 5px; cursor: pointer; }
+
+        @media (max-width: 600px) { .service-list { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<div id="contentOverlay">
+    <div class="overlay-nav">
+        <span id="navTitle" style="font-weight: bold;">Yojana Jankari</span>
+        <button onclick="closeOverlay()" style="background:red; color:white; border:none; padding:8px 15px; border-radius:5px; cursor:pointer;">X CLOSE</button>
+    </div>
+    <div class="overlay-content" id="overlayBody"></div>
+    <div id="btnArea">
+        <a href="#" id="redirectLink" class="apply-now-btn" target="_blank">OFFICIAL WEBSITE PAR JAYEIN</a>
+    </div>
+    <div style="height: 50px;"></div>
+</div>
+
+<header>
+    <h1>ग्रामीण सेवा केन्द्र</h1>
+    <p style="color: #000; font-weight: bold;">Bharat Ka No.1 Digital Information Portal</p>
+</header>
+
+<div class="container">
+    <div class="news-ticker">
+        <marquee>LATEST: Mahtari Vandan Yojana ki nayi kist jaari... Jan Dhan khata khulwayein zero balance par... PM Awas Yojana 2.0 ki list dekhein...</marquee>
+    </div>
+
+        <div class="service-list">
+        <div class="service-item" onclick="loadPage('resume')"><span>📄 CREATE RESUME (Professional)</span></div>
+        <div class="service-item" onclick="loadPage('naksha')"><span>🗺️नक्शा/ खसरा/ B1</span></div>
+        <div class="service-item" onclick="loadPage('pmkisan')"><span>🚜 PM किसान सम्मान निधि</span></div>
+        <div class="service-item" onclick="loadPage('ayushman')"><span>🏥 आयुष्मान कार्ड (5 Lakh Ilaj)</span></div>
+        <div class="service-item" onclick="loadPage('awas')"><span>🏠 PM आवास योजना लिस्ट</span></div>
+        <div class="service-item" onclick="loadPage('aadhaar')"><span>🆔 आधार कार्ड डाउनलोड</span></div>
+        <div class="service-item" onclick="loadPage('ration')"><span>🌾 राशन कार्ड नई लिस्ट</span></div>
+        <div class="service-item" onclick="loadPage('vishwakarma')"><span>🔨 PM विश्वकर्मा योजना</span></div>
+        
+        <div class="service-item" onclick="loadPage('mahtari')"><span>👩 महतारी वंदन योजना</span></div>
+        <div class="service-item" onclick="loadPage('pension')"><span>👴 वृद्धावस्था पेंशन लिस्ट</span></div>
+        <div class="service-item" onclick="loadPage('jandhan')"><span>💰 जन धन खाता (Zero Balance)</span></div>
+        <div class="service-item" onclick="loadPage('lakhpati')"><span>📊 लखपति दीदी योजना</span></div>
+        <div class="service-item" onclick="loadPage('rojgar')"><span>💼 रोजगार पंजीयन (Online)</span></div>
+        <div class="service-item" onclick="loadPage('udid')"><span>♿ विकलांग (UDID) कार्ड</span></div>
+        <div class="service-item" onclick="loadPage('sukanya')"><span>👧 सुकन्या समृद्धि योजना</span></div>
+        <div class="service-item" onclick="loadPage('voter')"><span>🗳️ Voter ID (Apply/Update)</span></div>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-btns">
+        <button onclick="loadPolicy('about')">About Us</button>
+        <button onclick="loadPolicy('privacy')">Privacy Policy</button>
+        <button onclick="loadPolicy('disclaimer')">Disclaimer</button>
+        <button onclick="loadPolicy('contact')">Contact Us</button>
+    </div>
+
+    <a href="https://www.instagram.com/dev_alone95?igsh=MWhmZ2k1NmF2czNieA==" class="insta-btn" target="_blank">Follow on Instagram</a>
+
+    <div class="adsense-disclaimer">
+        <b>AdSense Compliance Note:</b> Hamari website Gramin CSC kisi bhi sarkari sanstha se judi nahi hai. Hum keval sarvjanik roop se uplabdh jankari ko saral bhasha mein pahunchate hain. Yahan di gayi jankari ko official portal se zaroor verify karein.
+    </div>
+    <p>&copy; 2026 Gramin CSC | Designed for Digital India</p>
+</footer>
+
+<script>
+    const contentData = {
+              'resume': {
+            t: "Professional Resume Maker",
+            l: "https://www.resumeground.com/create-resume",
+            c: "<h3>Resume Kaise Banayein?</h3><p>Ek achha resume naukri pane ki pehli sidhi hai. Hamare tool se aap 5 minute mein PDF resume bana sakte hain.</p><h3>Detailed Steps:</h3><ul><li>Niche diye gaye button se Resume ground par jayein.</li><li>'Create My Resume' par click karein.</li><li>Apna Naam, Address, aur Education bharein.</li><li>Apna photo aur skills add karein.</li><li>Template chunein aur Download karein.</li></ul>"
+        },
+          'naksha': {
+            t: "नक्शा खसरा B1",
+            l: "https://sarkaricsc.com/cg-bhuiya-bhulekhbhu-naksha/",
+            c: "<h3>Yojana Ki Jankari</h3><p>Yadi Kisi Ka B1 Khasara Nomber Gum ho Jaata hai to is yojana ke madhyam se vah apna B1 aur khasra nomber nikal sakta hai niche diye gaye process ko follow karein</p><h3>Process:</h3><ul><li>Aapko jo bhi details dekhna hai uske aage blue neela colour mein yahan click karein likha hai us par click karein.</li><li>Apna State select karein.</li><li>Apna district,Block, village Name Bharkar search karein.</li></ul>"
+        },
+        'pmkisan': {
+            t: "PM Kisan Samman Nidhi",
+            l: "https://pmkisan.gov.in/",
+            c: "<h3>Yojana Ki Jankari</h3><p>Kisanon ko saalana 6000 rupaye (2000 ki 3 kistein) di janti hain.</p><h3>Process:</h3><ul><li>New Farmer Registration par click karein.</li><li>Aadhar, Mobile aur Khasra details bharein.</li><li>Status check karne ke liye 'Know Your Status' ka upyog karein.</li></ul>"
+        },
+        'ayushman': {
+            t: "Ayushman Bharat (Gold Card)",
+            l: "https://beneficiary.nha.gov.in/",
+            c: "<h3>Benefits:</h3><p>Prati parivar 5 lakh tak ka muft ilaj sarkari aur private aspataalon mein.</p><h3>Kaise Banayein:</h3><ul><li>PMJAY portal par Login karein.</li><li>Apna Ration Card ya Aadhar number dalkar naam khojein.</li><li>e-KYC complete karein aur card download karein.</li></ul>"
+        },
+        'mahtari': {
+            t: "Mahtari Vandan Yojana",
+            l: "https://mahtarivandan.cgstate.gov.in/",
+            c: "<h3>Yojana Jankari:</h3><p>Chhattisgarh ki mahilaon ko har mahine 1000 rupaye (saalana 12,000) diye jate hain.</p><h3>Kaise Apply Karein:</h3><ul><li>Portal par 'Aavedan ki sthiti' dekhein.</li><li>Naye aavedan ke liye offline form Gram Panchayat ya CSC se bharein.</li><li>Bank account mein DBT enable hona zaroori hai.</li></ul>"
+        },
+        'pension': {
+            t: "Vridhwastha Pension Yojana",
+            l: "https://nsap.nic.in/",
+            c: "<h3>Eligibility:</h3><p>60 varsh se adhik ayu ke vyaktiyon ke liye sarkari arthik sahayata.</p><h3>Steps:</h3><ul><li>Portal par 'Apply Online' par jayein.</li><li>Age Proof aur Income Certificate upload karein.</li><li>Panchayat ya Nagar Nigam dwara approval ka intezar karein.</li></ul>"
+        },
+        'jandhan': {
+            t: "PM Jan Dhan Yojana",
+            l: "https://www.pmjdy.gov.in/",
+            c: "<h3>Benefits:</h3><p>Zero balance account, ₹2 lakh ka accidental insurance, aur Overdraft suvidha.</p><h3>Process:</h3><ul><li>Kisi bhi nazdiki bank mein jayein ya online 'Jan Dhan Khata' ke liye apply karein.</li><li>Aadhar card aur 2 photo zaroori hain.</li><li>Isme koi minimum balance rakhne ki zaroorat nahi hai.</li></ul>"
+        },
+        'lakhpati': {
+            t: "Lakhpati Didi Yojana",
+            l: "https://lakhpatididi.nrlm.gov.in/",
+            c: "<h3>Target:</h3><p>Mahilaon ko swayam sahayata samooh (SHG) se jodkar unki aay ₹1 lakh saalana se upar le jana.</p><h3>Apply Kaise Karein:</h3><ul><li>Apne block ke NRLM office ya SHG leader se milein.</li><li>Skill training ke liye register karein.</li><li>Sarkar dwara milne wale saste loan ka labh uthayein.</li></ul>"
+        },
+        'rojgar': {
+            t: "Rojgar Panjiyan (Employment Registration)",
+            l: "https://exchange.config.nic.in/",
+            c: "<h3>Purpose:</h3><p>Sarkari naukriyon aur berozgari bhatte ke liye registration zaroori hai.</p><h3>Steps:</h3><ul><li>'Candidate Registration' par click karein.</li><li>Sari educational documents upload karein.</li><li>Registration number ko save karein, ye 3 saal tak valid rehta hai.</li></ul>"
+        },
+        'udid': {
+            t: "Viklang (UDID) Card",
+            l: "https://www.swavlambancard.gov.in/",
+            c: "<h3>Benefits:</h3><p>Divyang janon ko milne wali sabhi suvidhaon ke liye ek hi card kafi hai.</p><h3>Steps:</h3><ul><li>Apply for Disability Certificate par click karein.</li><li>Medical report aur photo upload karein.</li><li>Hospital jakar verification karwayein.</li></ul>"
+        },
+        'sukanya': {
+            t: "Sukanya Samriddhi Yojana",
+            l: "https://www.indiapost.gov.in/",
+            c: "<h3>Target:</h3><p>Betiyon ki padhai aur shadi ke liye sabse behtar bachat yojana.</p><h3>Details:</h3><ul><li>10 saal se kam umra ki beti ke naam par post office mein khata khulwayein.</li><li>Sabse zyada byaj dar (Interest rate) milta hai.</li><li>Income tax mein chhoot ka labh lein.</li></ul>"
+        },
+        // Baki purani yojanaein (Aadhar, Awas, etc.) ka data bhi yahan shamil hai...
+        'awas': { t:"PM Awas Yojana", l:"https://rhreporting.nic.in/netiay/SocialAuditReport/BeneficiaryDetailForSocialAuditReport.aspx", c:"<h3>Process:</h3><p>List dekhne ke liye Awaassoft par jayein aur apna State/Zila chunein.</p>" },
+        'aadhaar': { t:"Aadhar Download", l:"https://myaadhaar.uidai.gov.in/", c:"<h3>Process:</h3><p>OTP verify karke PDF download karein.</p>" },
+        'ration': { t:"Ration Card List", l:"https://nfsa.gov.in/", c:"<h3>Process:</h3><p>Apne Rajya ka portal chunein aur ration card details check karein.</p>" },
+        'vishwakarma': { t:"PM Vishwakarma", l:"https://pmvishwakarma.gov.in/", c:"<h3>Benefits:</h3><p>15,000/- toolkit e-voucher aur training ke sath ₹500 pratidin stipend.</p>" },
+        'voter': { t:"Voter ID Online", l:"https://voters.eci.gov.in/", c:"<h3>Process:</h3><p>Naya Card banane ke liye Form 6 bharein.</p>" }
+    };
+
+    function loadPage(key) {
+        const data = contentData[key];
+        if(!data) {
+            alert("Jankari Update ho rahi hai!");
+            return;
+        }
+        document.getElementById('navTitle').innerText = data.t;
+        document.getElementById('overlayBody').innerHTML = `<h2>${data.t} - Jankari</h2>` + data.c + `<div style='background:#e8f4fd; padding:15px; border-radius:10px; margin-top:20px;'>💡 <b>Tip:</b>Agar website open na ho to ek barr website ko refresh jarur karein dhanyawad 🙏.</div>`;    '.'
+        document.getElementById('redirectLink').href = data.l;
+        document.getElementById('btnArea').style.display = "block";
+        document.getElementById('contentOverlay').style.display = "block";
+        window.scrollTo(0,0);
+    }
+
+    function loadPolicy(type) {
+        document.getElementById('btnArea').style.display = "none";
+        const body = document.getElementById('overlayBody');
+        const titles = { 'about': 'About Us', 'privacy': 'Privacy Policy', 'disclaimer': 'Disclaimer', 'contact': 'Contact Us' };
+        document.getElementById('navTitle').innerText = titles[type];
+        
+        let html = `<h2>${titles[type]}</h2>`;
+        if(type === 'about') html += "<p>Gramin CSC portal ka uddeshya gramin kshetron mein digital saaksharta badhana aur logo ko sarkari labh ki sahi jankari dena hai.</p>";
+        else if(type === 'privacy') html += "<p>Hum aapki koi bhi niji jankari collect nahi karte. Hum keval Google Adsense ka upyog karte hain.</p>";
+        else if(type === 'contact') html += "<p>Humein Instagram par sampark karein ya humare gaon ke CSC kendra par aayein.</p>";
+        else html += "<p>Is website par di gayi jankari education purpose ke liye hai. Kisi bhi vittiya nuksan ke liye hum zimmedar nahi hain.</p>";
+        
+        body.innerHTML = html;
+        document.getElementById('contentOverlay').style.display = "block";
+    }
+
+    function closeOverlay() { document.getElementById('contentOverlay').style.display = "none"; }
+</script>
+
+</body>
+</html>
